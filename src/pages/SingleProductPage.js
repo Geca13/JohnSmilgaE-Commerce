@@ -44,7 +44,7 @@ history.push('/')
    return <Error/>
  }
 
-const { description , price , id:sku , qty , producer , subCategory:{description: sub, category:{description:cat}} , igredients , imageUrl} = product
+const { description , price , id:sku , qty , producer , subCategory , igredients , imageUrl} = product
 
   return (<Wrapper>
     <PageHero title={description} product/>   
@@ -67,10 +67,10 @@ const { description , price , id:sku , qty , producer , subCategory:{description
            <span> Availiability: </span>
            {qty > 0 ? 'In stock': 'Out of stock'}
           </p>
-          
+          {/*         
           <p className='info'>
           <span> Categorization : </span>
-             {cat} / {sub} </p>
+             {subCategory.subCategory.description} / {subCategory.description} </p>
 
              {producer !== null && <p className='info'>
             <span >producer :</span> {producer.name}
@@ -80,6 +80,7 @@ const { description , price , id:sku , qty , producer , subCategory:{description
             <span className='info'>ingredients :</span>
              {igredients.map(ingredient=> <li >{ingredient.ingredient}</li>)}
           </p>}
+          */}
           <hr/>
           {qty > 0 && <AddToCart product={product}/>}
         </section>

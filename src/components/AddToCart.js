@@ -11,16 +11,28 @@ const AddToCart = ({product}) => {
   const [amount, setAmount] = useState(1);
 
   const increase = () => {
-
+     setAmount((oldAmount)=>{
+       let tempAmount = oldAmount + 1
+       if (tempAmount > qty ) {
+         tempAmount = qty
+       }
+       return tempAmount
+     })
   }
 
-  const decreace = () => {
-
-  }
+  const decrease = () => {
+    setAmount((oldAmount)=>{
+      let tempAmount = oldAmount - 1
+      if (tempAmount < 1 ) {
+        tempAmount = 1
+      }
+      return tempAmount
+    })
+ }
 
   return (<Wrapper>
      <div className = 'btn-container'>
-      <AmountButtons/>
+      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
       <Link to='/cart' className='btn'>
         Add to cart
       </Link>
