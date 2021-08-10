@@ -5,9 +5,28 @@ import { FaCheck } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
-const AddToCart = () => {
-  return <h4>addToCart </h4>
-}
+const AddToCart = ({product}) => {
+  const {id , qty } = product
+
+  const [amount, setAmount] = useState(1);
+
+  const increase = () => {
+
+  }
+
+  const decreace = () => {
+
+  }
+
+  return (<Wrapper>
+     <div className = 'btn-container'>
+      <AmountButtons/>
+      <Link to='/cart' className='btn'>
+        Add to cart
+      </Link>
+     </div>
+  </Wrapper>
+)}
 
 const Wrapper = styled.section`
   margin-top: 2rem;
