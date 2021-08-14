@@ -64,6 +64,9 @@ export const FilterProvider = ({ children }) => {
     if(name === 'price') {
       value = Number(value)
     }
+    if(name === 'subCategory.category.description') {
+      value = e.target.textContent
+    }
     dispatch({type: UPDATE_FILTERS, payload: {name , value}})
   }
 

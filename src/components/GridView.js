@@ -7,10 +7,12 @@ const GridView = ({products}) => {
   return  <Wrapper>
         <div className='products-container'>
            {products.map((product) =>{
-             return <Product key={product.id} {...product} />
+             return <Product key={product.id} {...product } />
            })}
+           
         </div>
       </Wrapper>
+      
 }
 
 const Wrapper = styled.section`

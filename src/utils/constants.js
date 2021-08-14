@@ -49,4 +49,4 @@ export const services = [
 
 export const products_url = '/api/items'
 export const single_product_url = `http://localhost:8081/api/item/`
-export const menu = 'http://localhost:8081/api/categories'
+export const new_product = 'http://localhost:8081/api/newItem'

@@ -10,6 +10,7 @@ import {
 } from '../actions'
 
 const filter_reducer = (state, action) => {
+
   if(action.type === LOAD_PRODUCTS){
     let maxPrice = action.payload.map((product)=> product.price)
     maxPrice = Math.max(...maxPrice)
@@ -75,13 +76,27 @@ const filter_reducer = (state, action) => {
   }
   if(action.type === FILTER_PRODUCTS){
     const {all_products} = state
-    const {text , price} = state.filters
+    const {text , price , category , subCategory} = state.filters
     let tempProducts = [...all_products]
+
     if(text) {
       tempProducts= tempProducts.filter((product) =>{
         return product.description.toLowerCase().startsWith(text)
       })
     }
+
+    if (category !== 'all') {
+      tempProducts = tempProducts.filter(
+        (product) => product.subCategory.category.description === category
+      )
+    }
+
+    if (subCategory !== 'all') {
+      tempProducts = tempProducts.filter(
+        (product) => product.subCategory.description === subCategory
+      )
+    }
+
     tempProducts = tempProducts.filter((product) => product.price <= price)
     return {
       ...state,

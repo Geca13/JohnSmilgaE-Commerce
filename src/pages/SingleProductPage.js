@@ -20,12 +20,14 @@ const SingleProductPage = () => {
   const {
     single_product_loading: loading ,
      single_product_error:error,
-      single_product:product,
+      single_product: product,
+      
        fetchSingleProduct
        } = useProductsContext()
-
+       console.log(product);
  useEffect(()=>{
    fetchSingleProduct(`${url}${id}`)
+   console.log(url)
  },[id]) 
 
  useEffect(()=>{
@@ -55,7 +57,7 @@ const { description , price , id:sku , qty , producer , subCategory , igredients
       <div className='product-center'>
         <ProductImages imageUrl={imageUrl}/>
         <section className='content'>
-          <h2> { description }</h2>
+          <h2> { sku }</h2>
          
           <h5 className='price'>
           <span> Price: </span>
@@ -67,20 +69,23 @@ const { description , price , id:sku , qty , producer , subCategory , igredients
            <span> Availiability: </span>
            {qty > 0 ? 'In stock': 'Out of stock'}
           </p>
-          {/*         
-          <p className='info'>
-          <span> Categorization : </span>
-             {subCategory.subCategory.description} / {subCategory.description} </p>
+                 
+          
 
-             {producer !== null && <p className='info'>
+             {subCategory  && <p className='info'>
+          <span> Categorization : </span>
+             {subCategory.category.description} / {subCategory.description} </p>}
+
+             {producer  && <p className='info'>
             <span >producer :</span> {producer.name}
           </p>}
-          {igredients.length > 0 &&
+          
+          {igredients && 
           <p>
             <span className='info'>ingredients :</span>
-             {igredients.map(ingredient=> <li >{ingredient.ingredient}</li>)}
+             {igredients.map(ingredient=> <li key={ingredient.id} >{ingredient.ingredient}</li>)}
           </p>}
-          */}
+          
           <hr/>
           {qty > 0 && <AddToCart product={product}/>}
         </section>

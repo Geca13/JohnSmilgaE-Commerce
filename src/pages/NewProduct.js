@@ -1,56 +1,66 @@
 import React from 'react'
+import { useProductsContext } from '../context/products_context'
 import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import { getUniqueValues } from '../utils/helpers'
+import { PageHero } from '../components'
 
-const Filters = () => {
 
-  const {
-    filters:{
-      text,
-      category,
-      subCategory,
-      min_price,
-      max_price,
-      price
-    },
-    updateFilters,
-    clearFilters,
-    all_products
-  } = useFilterContext();
+const NewProduct = () => {
 
-  const subCategories = ['all'];
-  all_products.map(sub =>{
+    const { products , newProduct } = useProductsContext();
+    
+
+    const subCategories = [];
+    products.map(sub =>{
     if(subCategories.indexOf(sub.subCategory.description) === -1){
       subCategories.push(sub.subCategory.description)
     }
-  })
-  const categories = ['all'];
-  all_products.map(cat =>{
-    if(categories.indexOf(cat.subCategory.category.description) === -1){
-      categories.push(cat.subCategory.category.description)
+  }) 
+
+  const producers = [" "];
+  products.map(sub =>{
+    if(sub.producer !== null && producers.indexOf(sub.producer.name) === -1){
+        producers.push(sub.producer.name)
     }
-  })
+  }) 
 
-  console.log(subCategories)
+  
 
-  return <Wrapper>
-    <div className='content'>
-      <form onSubmit={(e)=>e.preventDefault()}>
-         <div className='form-control'>
-           <input type='text'
-            name='text'
-             placeholder='search'
-             className='search-input'
-             value={text}
-             onChange={updateFilters} />
-         </div>
+  const ingredients = getUniqueValues(products,'igredients');
+/*
+  const uniqueIngredients =[];
+  ingredients.map(sub =>{
+    if( uniqueIngredients.indexOf(sub.ingredient.ingredient) === -1){
+      uniqueIngredients.push(sub.ingredient.ingredient)
+    }
+  }) 
+*/
+  
+  console.log(ingredients)
+ 
+    return (
+      <main>
+      <PageHero title='Add new Product' />
+        <Wrapper>
 
-         <div className='form-control'>
+          <div className='content'>
+          <form onSubmit={(e)=>e.preventDefault()}>
+             <div className='form-control'>
+               <input type='text' placeholder='description' />
+             </div>
+
+             <div className='form-control'>
+              <input type='text' placeholder='price' />
+             </div>
+
+             <div className='form-control'>
+              <input type='text' />
+             </div>
+
+             <div className='form-control'>
            <h5>Category</h5>
-           <select name='category' value={category} onChange={updateFilters} className='category' >
-            {categories.map((category, index) =>{
+           <select name='category'  className='category' >
+            {subCategories.map((category, index) =>{
               return <option key={index} value={category} > {category}</option>
             })}
            </select>
@@ -58,32 +68,37 @@ const Filters = () => {
          </div>
 
          <div className='form-control'>
-           <h5>subcategory</h5>
-           <select name='subCategory' value={subCategory} onChange={updateFilters} className='category' >
-            {subCategories.map((subCategory, index) =>{
-              return <option key={index} value={subCategory} > {subCategory}</option>
+           <h5>Producer</h5>
+           <select name='category'  className='category' >
+            {producers.map((category, index) =>{
+              return <option key={index} value={category} > {category}</option>
             })}
            </select>
          
          </div>
 
-         <div className ='form-control'>
-           <h5>price</h5>
-           <p className='price'>{price}</p>
-           <input type='range' name='price'
-            onChange={updateFilters} 
-            min={min_price}
-            max={max_price}
-            value={price} />
-        </div>     
-      </form>
-      <button type='button'
-       className='clear-btn'
-       onClick={clearFilters} >
-         clear filters
-      </button>
-    </div>
-  </Wrapper>
+         <div>
+          <h3>Select ingredients</h3>
+          <ul > 
+           {ingredients.map((category, index) => {
+              return (
+                <li key={index}>
+                  <input
+                    type="checkbox"/>
+                    <label>{category}</label>
+                </li>
+              )
+           })}
+              
+          </ul>
+     
+         </div>
+          </form>
+            </div>
+            
+        </Wrapper>
+        </main>
+    )
 }
 
 const Wrapper = styled.section`
@@ -184,5 +199,4 @@ const Wrapper = styled.section`
     }
   }
 `
-
-export default Filters
+export default NewProduct

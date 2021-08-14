@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const ListView = ({products}) => {
   return <Wrapper>
        {products.map((product) => {
-         const {id, imageUrl, description , price} = product;
+         const {id, imageUrl, description , price, subCategory , igredients, producer} = product;
          return <article key ={id} >
            <img src={imageUrl} alt={description} />
           <div>
