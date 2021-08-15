@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useProductsContext } from '../context/products_context'
 import styled from 'styled-components'
 import { getUniqueValues } from '../utils/helpers'
 import { PageHero } from '../components'
 
+import axios from 'axios'
+
 
 const NewProduct = () => {
 
-    const { products , newProduct } = useProductsContext();
+    const { products , newProduct, ingredients } = useProductsContext();
     
+    console.log(ingredients)
 
     const subCategories = [];
     products.map(sub =>{
@@ -23,21 +26,8 @@ const NewProduct = () => {
         producers.push(sub.producer.name)
     }
   }) 
-
-  
-
-  const ingredients = getUniqueValues(products,'igredients');
-/*
-  const uniqueIngredients =[];
-  ingredients.map(sub =>{
-    if( uniqueIngredients.indexOf(sub.ingredient.ingredient) === -1){
-      uniqueIngredients.push(sub.ingredient.ingredient)
-    }
-  }) 
-*/
-  
-  console.log(ingredients)
  
+  
     return (
       <main>
       <PageHero title='Add new Product' />
@@ -80,12 +70,12 @@ const NewProduct = () => {
          <div>
           <h3>Select ingredients</h3>
           <ul > 
-           {ingredients.map((category, index) => {
+           {ingredients.map((ingredient, id) => {
               return (
-                <li key={index}>
+                <li key={id}>
                   <input
-                    type="checkbox"/>
-                    <label>{category}</label>
+                    type="checkbox" /> {ingredient}
+                    
                 </li>
               )
            })}

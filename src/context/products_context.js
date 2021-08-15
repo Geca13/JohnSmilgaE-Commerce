@@ -9,6 +9,9 @@ import {
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
+  GET_INGREDIENTS_BEGIN,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_ERROR,
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
@@ -17,7 +20,7 @@ import {
 } from '../actions'
 
 const products_url = '/api/items'
-const single_product_url = `/api/item/`
+const allIngredients = `/api/allIngredients`
 const new_product = '/api/newItem'
 
 const initialState = {
@@ -25,6 +28,9 @@ const initialState = {
   products_loading:false,
   products_error:false,
   products:[],
+  ingredients_loading:false,
+  ingredients:false,
+  ingredients:[],
   featured_products:[],
   single_product_loading : false,
   single_product_error : false,
@@ -54,6 +60,17 @@ export const ProductsProvider = ({ children }) => {
       dispatch({type: GET_PRODUCTS_ERROR})
     }
    }
+
+   const fetchIngredients = async(url) => {
+    dispatch({type:GET_INGREDIENTS_BEGIN})
+    try {
+      const response = await axios.get('/api/allIngredients')
+      const ingredients = response.data
+      dispatch({type:GET_INGREDIENTS_SUCCESS,payload:ingredients})
+    } catch (error) {
+      dispatch({type: GET_INGREDIENTS_ERROR})
+    }
+   }
   
    const fetchSingleProduct = async (single_product_url) => {
      dispatch({type:GET_SINGLE_PRODUCT_BEGIN})
@@ -65,6 +82,8 @@ export const ProductsProvider = ({ children }) => {
        dispatch({type:GET_SINGLE_PRODUCT_ERROR})
      }
    }
+
+
 
    const newProduct = async (userInput) => {
     
@@ -81,7 +100,9 @@ export const ProductsProvider = ({ children }) => {
   }
 
 
-
+  useEffect(()=>{
+    fetchIngredients(allIngredients )
+  },[])
 
   useEffect(()=>{
     fetchProducts(products_url)

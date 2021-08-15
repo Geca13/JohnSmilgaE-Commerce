@@ -9,6 +9,9 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
   CREATE_PRODUCT_SUCCESS,
   CREATE_PRODUCT_ERROR,
+  GET_INGREDIENTS_BEGIN,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_ERROR
 } from '../actions'
 
 const products_reducer = (state, action) => {
@@ -32,6 +35,19 @@ const products_reducer = (state, action) => {
 
   if(action.type === GET_PRODUCTS_ERROR){
     return {...state, products_loading:false, products_error:true }
+  }
+
+  if(action.type === GET_INGREDIENTS_BEGIN){
+    return {...state, ingredients_loading: true }
+  }
+
+  if(action.type === GET_INGREDIENTS_SUCCESS){
+    const ingredients = action.payload
+    return {...state, ingredients_loading:false,ingredients:action.payload}
+  }
+
+  if(action.type === GET_INGREDIENTS_ERROR){
+    return {...state, ingredients_loading:false, ingredients_error:true }
   }
 
   if(action.type === GET_SINGLE_PRODUCT_BEGIN){
