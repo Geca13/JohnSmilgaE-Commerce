@@ -60,7 +60,7 @@ const products_reducer = (state, action) => {
 
   if (action.type === CREATE_PRODUCT_SUCCESS) {
     return {
-      ...state, item: [...state, action.payload],
+      ...state, item:action.payload,
     }
   }
 

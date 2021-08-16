@@ -48,6 +48,6 @@ export const services = [
 //export const single_product_url = `https://course-api.com/react-store-single-product?id=`
 
 export const products_url = '/api/items'
-export const single_product_url = `http://localhost:8081/api/item/`
-export const new_product = 'http://localhost:8081/api/newItem'
+export const single_product_url = `/api/item/`
+export const new_product = '/api/newItem'
 export const getIngredients='/api/allIngredients/'

@@ -8,6 +8,7 @@ import { PageHero } from '../components'
 const NewProduct = () => {
 
   const [values, setValues] = useState({
+    id:'',
      description: '',
       price: '',
       producer:{
@@ -32,11 +33,11 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const { description , price , producer , subCategory , igredients} = values
-    if (description && price ) {
+    const {id, description , price } = values
+    if (description && price && id ) {
       newProduct(values)
       setValues({ 
-        id: productId,
+        id: '',
         description: '',
       price: '',
       producer:{
@@ -55,7 +56,7 @@ const NewProduct = () => {
     
     
     
-
+/*
     const subCategories = [];
     products.map(sub =>{
     if(subCategories.indexOf(sub.subCategory.description) === -1){
@@ -70,7 +71,7 @@ const NewProduct = () => {
     }
   }) 
  
-  
+  */
     return (
       <main>
       <PageHero title='Add new Product' />
@@ -96,9 +97,14 @@ const NewProduct = () => {
              </div>
 
              <div className='form-control'>
-              <input type='text' />
+             <input
+                type='id'
+                 name='id'
+                  value={values.id}
+                   placeholder='id' 
+                   onChange={handleChange} />
              </div>
-
+{/* 
              <div className='form-control'>
            <h5>Category</h5>
            <select name='category'  className='category' >
@@ -137,6 +143,7 @@ const NewProduct = () => {
           </ul>
      
          </div>
+          */}
          <button type='submit'>submit</button>
           </form>
             </div>

@@ -15,6 +15,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const SingleProductPage = () => {
+  
   const {id} = useParams();
   const history = useHistory()
   const {
@@ -24,7 +25,8 @@ const SingleProductPage = () => {
       
        fetchSingleProduct
        } = useProductsContext()
-       console.log(product);
+
+       
  useEffect(()=>{
    fetchSingleProduct(`${url}${id}`)
    console.log(url)
@@ -91,6 +93,7 @@ const { description , price , id:sku , qty , producer , subCategory , igredients
         </section>
       </div>
     </div>
+    
   </Wrapper>)
 }
 
