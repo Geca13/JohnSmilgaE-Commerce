@@ -1,17 +1,60 @@
 import React, { useState } from 'react'
 import { useProductsContext } from '../context/products_context'
 import styled from 'styled-components'
-import { getUniqueValues } from '../utils/helpers'
 import { PageHero } from '../components'
 
-import axios from 'axios'
 
 
 const NewProduct = () => {
 
-    const { products , newProduct, ingredients } = useProductsContext();
+  const [values, setValues] = useState({
+     description: '',
+      price: '',
+      producer:{
+        id: '',
+        name :''
+      },
+      subCategory: {
+        id:'',
+        description:''
+      },
+      igredients:[]
+ })
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value })
+  }
+
+  const { products , newProduct, ingredients } = useProductsContext();
+
+  let productId = products.length +1
+  console.log(productId);
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const { description , price , producer , subCategory , igredients} = values
+    if (description && price ) {
+      newProduct(values)
+      setValues({ 
+        id: productId,
+        description: '',
+      price: '',
+      producer:{
+        id: '',
+        name :''
+      },
+      subCategory: {
+        id:'',
+        description:''
+      },
+      igredients:[]
+      })
+    }
+  }
+
     
-    console.log(ingredients)
+    
+    
 
     const subCategories = [];
     products.map(sub =>{
@@ -34,13 +77,22 @@ const NewProduct = () => {
         <Wrapper>
 
           <div className='content'>
-          <form onSubmit={(e)=>e.preventDefault()}>
+          <form onSubmit={(e)=>e.preventDefault()} onSubmit={handleSubmit}>
              <div className='form-control'>
-               <input type='text' placeholder='description' />
+               <input
+                type='name'
+                 name='description'
+                  value={values.description}
+                   placeholder='description' 
+                   onChange={handleChange} />
              </div>
 
              <div className='form-control'>
-              <input type='text' placeholder='price' />
+              <input type='name'
+               name='price'
+                value={values.price}
+                onChange={handleChange}
+                  placeholder='price' />
              </div>
 
              <div className='form-control'>
@@ -70,11 +122,13 @@ const NewProduct = () => {
          <div>
           <h3>Select ingredients</h3>
           <ul > 
-           {ingredients.map((ingredient, id) => {
+           {ingredients.map(({ingredient, id}, index) => {
               return (
-                <li key={id}>
+                <li key={index}>
+                  <label>{id} {ingredient} </label>
                   <input
-                    type="checkbox" /> {ingredient}
+                    type="checkbox" /> 
+                    
                     
                 </li>
               )
@@ -83,6 +137,7 @@ const NewProduct = () => {
           </ul>
      
          </div>
+         <button type='submit'>submit</button>
           </form>
             </div>
             
