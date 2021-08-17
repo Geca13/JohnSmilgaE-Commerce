@@ -9,6 +9,8 @@ const NewProduct = () => {
 
   const [values, setValues] = useState({
     id:'',
+    imageUrl:'',
+    qty:'',
      description: '',
       price: '',
       producer:{
@@ -17,7 +19,7 @@ const NewProduct = () => {
       },
       subCategory: {
         id:'',
-        description:''
+        desc:''
       },
       igredients:[]
  })
@@ -33,20 +35,22 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const {id, description , price } = values
+    const {id, description , price, imageUrl, subCategory:{description: desc}  } = values
     if (description && price && id ) {
       newProduct(values)
       setValues({ 
         id: '',
         description: '',
       price: '',
+      qty:'',
+      imageUrl: '',
       producer:{
         id: '',
         name :''
       },
       subCategory: {
-        id:'',
-        description:''
+        index:'',
+        desc:''
       },
       igredients:[]
       })
@@ -56,14 +60,14 @@ const NewProduct = () => {
     
     
     
-/*
+
     const subCategories = [];
     products.map(sub =>{
     if(subCategories.indexOf(sub.subCategory.description) === -1){
       subCategories.push(sub.subCategory.description)
     }
   }) 
-
+   /*
   const producers = [" "];
   products.map(sub =>{
     if(sub.producer !== null && producers.indexOf(sub.producer.name) === -1){
@@ -98,23 +102,45 @@ const NewProduct = () => {
 
              <div className='form-control'>
              <input
-                type='id'
+                type='name'
                  name='id'
                   value={values.id}
                    placeholder='id' 
                    onChange={handleChange} />
              </div>
-{/* 
+
+             <div className='form-control'>
+             <input
+                type='name'
+                 name='imageUrl'
+                  value={values.imageUrl}
+                   placeholder='link to image' 
+                   onChange={handleChange} />
+             </div>
+
+             <div className='form-control'>
+             <input
+                type='name'
+                 name='qty'
+                  value={values.qty}
+                   placeholder='qty' 
+                   onChange={handleChange} />
+             </div>
+ 
              <div className='form-control'>
            <h5>Category</h5>
-           <select name='category'  className='category' >
-            {subCategories.map((category, index) =>{
-              return <option key={index} value={category} > {category}</option>
+           <select name='subCategory'
+            value={values.desc} 
+             className='category' 
+             onChange={handleChange}>
+            {subCategories.map((desc, index) =>{
+              return <option key={index} value={JSON.stringify(values.desc)} > {desc}</option>
+
             })}
            </select>
          
          </div>
-
+         {/*
          <div className='form-control'>
            <h5>Producer</h5>
            <select name='category'  className='category' >
