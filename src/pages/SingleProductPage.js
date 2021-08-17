@@ -76,7 +76,7 @@ const { description , price , id:sku , qty , producer , subCategory , igredients
 
              {subCategory  && <p className='info'>
           <span> Categorization : </span>
-             {subCategory.category.description} / {subCategory.description} </p>}
+             {subCategory.category.description} / {subCategory.subCategoryName} </p>}
 
              {producer  && <p className='info'>
             <span >producer :</span> {producer.name}

@@ -11,7 +11,10 @@ import {
   CREATE_PRODUCT_ERROR,
   GET_INGREDIENTS_BEGIN,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_ERROR
+  GET_INGREDIENTS_ERROR,
+  GET_SUBCATEGORIES_BEGIN,
+  GET_SUBCATEGORIES_SUCCESS,
+  GET_SUBCATEGORIES_ERROR
 } from '../actions'
 
 const products_reducer = (state, action) => {
@@ -48,6 +51,19 @@ const products_reducer = (state, action) => {
 
   if(action.type === GET_INGREDIENTS_ERROR){
     return {...state, ingredients_loading:false, ingredients_error:true }
+  }
+
+  if(action.type === GET_SUBCATEGORIES_BEGIN){
+    return {...state, subCategories_loading: true }
+  }
+
+  if(action.type === GET_SUBCATEGORIES_SUCCESS){
+    const ingredients = action.payload
+    return {...state, subCategories_loading:false,subCategories:action.payload}
+  }
+
+  if(action.type === GET_SUBCATEGORIES_ERROR){
+    return {...state, subCategories_loading:false, subCategories_error:true }
   }
 
   if(action.type === GET_SINGLE_PRODUCT_BEGIN){

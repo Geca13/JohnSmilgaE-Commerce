@@ -50,4 +50,5 @@ export const services = [
 export const products_url = '/api/items'
 export const single_product_url = `/api/item/`
 export const new_product = '/api/newItem'
-export const getIngredients='/api/allIngredients/'
+export const getIngredients='/api/allIngredients'
+export const getSubCategories='/api/subCategories'

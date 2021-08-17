@@ -17,10 +17,14 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
   CREATE_PRODUCT_SUCCESS,
   CREATE_PRODUCT_ERROR,
+  GET_SUBCATEGORIES_BEGIN,
+  GET_SUBCATEGORIES_SUCCESS,
+  GET_SUBCATEGORIES_ERROR
 } from '../actions'
 
 const products_url = '/api/items'
 const allIngredients = `/api/allIngredients`
+const allSubCategories = '/api/subCategories'
 const new_product = '/api/newItem'
 
 const initialState = {
@@ -29,8 +33,9 @@ const initialState = {
   products_error:false,
   products:[],
   ingredients_loading:false,
-  ingredients:false,
   ingredients:[],
+  subCategories_loading:false,
+  subCategories:[],
   featured_products:[],
   single_product_loading : false,
   single_product_error : false,
@@ -71,6 +76,17 @@ export const ProductsProvider = ({ children }) => {
       dispatch({type: GET_INGREDIENTS_ERROR})
     }
    }
+
+   const fetchSubCategories = async(allSubCategories) => {
+    dispatch({type:GET_SUBCATEGORIES_BEGIN})
+    try {
+      const response = await axios.get('/api/subCategories')
+      const subCategories = response.data
+      dispatch({type:GET_SUBCATEGORIES_SUCCESS,payload:subCategories})
+    } catch (error) {
+      dispatch({type: GET_SUBCATEGORIES_ERROR})
+    }
+   }
   
    const fetchSingleProduct = async (single_product_url) => {
      dispatch({type:GET_SINGLE_PRODUCT_BEGIN})
@@ -105,11 +121,15 @@ export const ProductsProvider = ({ children }) => {
   },[])
 
   useEffect(()=>{
+    fetchSubCategories('/api/subCategories')
+  },[])
+
+  useEffect(()=>{
     fetchProducts(products_url)
   },[])
   
   return (
-    <ProductsContext.Provider value={{...state, openSidebar, closeSidebar, fetchSingleProduct, newProduct}}>
+    <ProductsContext.Provider value={{...state, openSidebar, closeSidebar, fetchSingleProduct, newProduct, }}>
       {children}
     </ProductsContext.Provider>
   )

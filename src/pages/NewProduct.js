@@ -17,10 +17,8 @@ const NewProduct = () => {
         id: '',
         name :''
       },
-      subCategory: {
-        id:'',
-        desc:''
-      },
+      subCategoryName:'',
+      
       igredients:[]
  })
 
@@ -28,14 +26,14 @@ const NewProduct = () => {
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
-  const { products , newProduct, ingredients } = useProductsContext();
+  const { products , newProduct, ingredients, subCategories } = useProductsContext();
 
   let productId = products.length +1
   console.log(productId);
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const {id, description , price, imageUrl, subCategory:{description: desc}  } = values
+    const {id, description , price, imageUrl, subCategory:{subCategoryName}  } = values
     if (description && price && id ) {
       newProduct(values)
       setValues({ 
@@ -48,26 +46,24 @@ const NewProduct = () => {
         id: '',
         name :''
       },
-      subCategory: {
-        index:'',
-        desc:''
-      },
+      subCategoryName:'',
+
       igredients:[]
       })
     }
   }
 
+    console.log(subCategories)
     
     
-    
-
+ /*
     const subCategories = [];
     products.map(sub =>{
-    if(subCategories.indexOf(sub.subCategory.description) === -1){
-      subCategories.push(sub.subCategory.description)
+    if(subCategories.indexOf(sub.subCategory.subCategoryName) === -1){
+      subCategories.push(sub.subCategory.subCategoryName)
     }
   }) 
-   /*
+  
   const producers = [" "];
   products.map(sub =>{
     if(sub.producer !== null && producers.indexOf(sub.producer.name) === -1){
@@ -130,11 +126,11 @@ const NewProduct = () => {
              <div className='form-control'>
            <h5>Category</h5>
            <select name='subCategory'
-            value={values.desc} 
+            value={values.subCategoryName} 
              className='category' 
              onChange={handleChange}>
-            {subCategories.map((desc, index) =>{
-              return <option key={index} value={JSON.stringify(values.desc)} > {desc}</option>
+            {subCategories.map(({subCategoryName, id}, index) =>{
+              return <option key={index} value={subCategoryName} > {subCategoryName}</option>
 
             })}
            </select>
@@ -150,7 +146,7 @@ const NewProduct = () => {
            </select>
          
          </div>
-
+*/}
          <div>
           <h3>Select ingredients</h3>
           <ul > 
@@ -169,7 +165,7 @@ const NewProduct = () => {
           </ul>
      
          </div>
-          */}
+          
          <button type='submit'>submit</button>
           </form>
             </div>
